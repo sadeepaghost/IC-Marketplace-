@@ -35,4 +35,16 @@ return [
         ],
     ],
 
+    'anthropic' => [
+    'api_key' => env('ANTHROPIC_API_KEY'),
+    'model' => env('ANTHROPIC_MODEL'),
+    'base_url' => env(
+        'ANTHROPIC_BASE_URL',
+        'https://api.anthropic.com/v1/messages'
+    ),
+],
+
+'ic_marketplace' => [
+    'admin_email' => env('IC_MARKETPLACE_ADMIN_EMAIL'),
+],
 ];

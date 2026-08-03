@@ -9,7 +9,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class SourcingRequestAlert extends Mailable
+class SourcingRequestConfirmation extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -20,26 +20,17 @@ class SourcingRequestAlert extends Mailable
 
     public function envelope(): Envelope
     {
-        $part = strtoupper($this->sourcingRequest->part_number);
-
-        $company = $this->sourcingRequest->company_name
-            ? " from {$this->sourcingRequest->company_name}"
-            : '';
-
         return new Envelope(
-            subject: "New Sourcing Request [{$this->sourcingRequest->reference_number}]: {$part}{$company}",
+            subject: "Sourcing request received: {$this->sourcingRequest->reference_number}",
         );
     }
 
     public function content(): Content
     {
         return new Content(
-            view: 'emails.admin.sourcing-request-alert',
+            view: 'emails.customer.sourcing-request-confirmation',
             with: [
                 'request' => $this->sourcingRequest,
-                'hasSuggestions' => ! empty(
-                    $this->sourcingRequest->suggested_alternatives
-                ),
             ],
         );
     }
